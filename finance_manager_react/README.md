@@ -1,3 +1,3 @@
-### React app
-## Finance manager Приложение для контроля финансов
+### Finance manager react
+## UI часть сервиса Finance manager
 
