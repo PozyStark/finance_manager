@@ -1,3 +1,4 @@
 from django.contrib import admin
+from finance_manager.models import FinanceManagerUser
 
-# Register your models here.
+admin.site.register(FinanceManagerUser)
