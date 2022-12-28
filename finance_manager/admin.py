@@ -1,8 +1,7 @@
 from django.contrib import admin
-from finance_manager.models import FinanceManagerUser,\
-    Expenses, RegularExpenses, CashIncomes, Banks
+from finance_manager.models import Expenses, RegularExpenses, CashIncomes, Banks, FinanceUser
 
-admin.site.register(FinanceManagerUser)
+admin.site.register(FinanceUser)
 admin.site.register(Expenses)
 admin.site.register(RegularExpenses)
 admin.site.register(CashIncomes)
