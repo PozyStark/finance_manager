@@ -31,13 +31,22 @@ class FinanceUserRegisterAPIView(CreateAPIView):
 
 
 class FinanceUserUpdateAPIView(GenericAPIView):
+
     permission_classes = [IsAuthenticated]
     serializer_class = FinanceUserUpdateSerializer
 
+    def get(self, request):
+        serializer = FinanceUserUpdateSerializer(request.user)
+        return Response({"user": serializer.data})
+
     def put(self, request, *args, **kwargs):
         print(request.data)
-        serializer = FinanceUserUpdateSerializer(request.data)
-        return Response({"response": request.user.email})
+        serializer = FinanceUserUpdateSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.update(request.user, serializer.data)
+            serializer = FinanceUserUpdateSerializer(user)
+            return Response({"user": serializer.data})
+        return Response({"errors": serializer.errors})
 
 
 class ExpensesAPIList(ListAPIView):
