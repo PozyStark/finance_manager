@@ -3,5 +3,6 @@
 keys.py
 /deployment_key.txt
 /__pycache__/
+/finance_manager/migrations/__pycache__/
 /config/__pycache__/
 /finance_manager/__pycache__/
