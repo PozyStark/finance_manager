@@ -35,28 +35,29 @@ class FinanceUserRegisterSerializer(serializers.ModelSerializer):
         ]
 
 
-class FinanceUserUpdateSerializer(serializers.ModelSerializer):
+class FinanceUserUpdateSerializer(serializers.Serializer):
 
-    email = serializers.EmailField(max_length=255, required=False)
-    first_name = serializers.CharField(max_length=255, required=False)
-    last_name = serializers.CharField(max_length=255, required=False)
-    password = serializers.CharField(max_length=255, required=False)
-    password_confirm = serializers.CharField(max_length=255, required=False)
+    email = serializers.EmailField(max_length=255, required=False, allow_blank=True)
+    number = serializers.CharField(max_length=18, required=False, allow_blank=True)
+    first_name = serializers.CharField(max_length=255, required=False, allow_blank=True)
+    last_name = serializers.CharField(max_length=255, required=False, allow_blank=True)
+    password = serializers.CharField(required=False, write_only=True, allow_blank=True)
+    password_confirm = serializers.CharField(required=False, write_only=True, allow_blank=True)
 
     def update(self, instance, validated_data):
         instance.email = validated_data.get('email', instance.email)
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        password = validated_data.get('password', None)
+        password_confirm = validated_data.get('password_confirm', None)
+
+        if password != password_confirm:
+            raise serializers.ValidationError({password: 'password matching error'})
+
+        if password is not None and password_confirm is not None:
+            instance.set_password(validated_data.get('password'))
         instance.save()
         return instance
-
-    class Meta:
-        model = FinanceUser
-        fields = [
-            'email',
-            'first_name',
-            'last_name',
-            'password',
-            'password_confirm'
-        ]
 
 
 class ExpensesSerializer(serializers.Serializer):
