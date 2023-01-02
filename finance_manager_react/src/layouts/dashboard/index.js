@@ -63,7 +63,7 @@ function Dashboard() {
             <Grid item xs={12} md={6} xl={3}>
               <MiniStatisticsCard
                 title={{ text: "Поступления" }}
-                count="2,300"
+                count="200300"
                 icon={{ color: "info", component: <IoGlobe size="22px" color="white" /> }}
               />
             </Grid>
@@ -85,7 +85,7 @@ function Dashboard() {
         </VuiBox>
         <VuiBox mb={3}>
           <Grid container spacing={3}>
-            <Grid item xs={12} lg={6} xl={7}>
+            <Grid item xs={12} lg={12} xl={12}>
               <Card>
                 <VuiBox sx={{ height: "100%" }}>
                   <VuiTypography variant="lg" color="white" fontWeight="bold" mb="5px">
@@ -100,9 +100,12 @@ function Dashboard() {
                 </VuiBox>
               </Card>
             </Grid>
-            <Grid item xs={12} lg={6} xl={5}>
+            <Grid item xs={12} lg={12} xl={12}>
               <Card>
                 <VuiBox>
+                <VuiTypography variant="lg" color="white" fontWeight="bold" mb="10px">
+                    Количество транзакций
+                  </VuiTypography>
                   <VuiBox
                     mb="24px"
                     height="220px"
@@ -119,108 +122,7 @@ function Dashboard() {
                       barChartData={barChartDataDashboard}
                       barChartOptions={barChartOptionsDashboard}
                     />
-                  </VuiBox>
-                  <VuiTypography variant="lg" color="white" fontWeight="bold" mb="5px">
-                    Количество транзакций
-                  </VuiTypography>
-                  <Grid container spacing="50px">
-                    <Grid item xs={6} md={3} lg={3}>
-                      <Stack
-                        direction="row"
-                        spacing={{ sm: "10px", xl: "4px", xxl: "10px" }}
-                        mb="6px"
-                      >
-                        <VuiBox
-                          bgColor="info"
-                          display="flex"
-                          justifyContent="center"
-                          alignItems="center"
-                          sx={{ borderRadius: "6px", width: "25px", height: "25px" }}
-                        >
-                          <IoWallet color="#fff" size="12px" />
-                        </VuiBox>
-                        <VuiTypography color="text" variant="button" fontWeight="medium">
-                          Продукты
-                        </VuiTypography>
-                      </Stack>
-                      <VuiTypography color="white" variant="lg" fontWeight="bold" mb="8px">
-                        32800
-                      </VuiTypography>
-                      <VuiProgress value={60} color="info" sx={{ background: "#2D2E5F" }} />
-                    </Grid>
-                    <Grid item xs={6} md={3} lg={3}>
-                      <Stack
-                        direction="row"
-                        spacing={{ sm: "10px", xl: "4px", xxl: "10px" }}
-                        mb="6px"
-                      >
-                        <VuiBox
-                          bgColor="info"
-                          display="flex"
-                          justifyContent="center"
-                          alignItems="center"
-                          sx={{ borderRadius: "6px", width: "25px", height: "25px" }}
-                        >
-                          <IoIosRocket color="#fff" size="12px" />
-                        </VuiBox>
-                        <VuiTypography color="text" variant="button" fontWeight="medium">
-                          Кошки
-                        </VuiTypography>
-                      </Stack>
-                      <VuiTypography color="white" variant="lg" fontWeight="bold" mb="8px">
-                        242900
-                      </VuiTypography>
-                      <VuiProgress value={60} color="info" sx={{ background: "#2D2E5F" }} />
-                    </Grid>
-                    <Grid item xs={6} md={3} lg={3}>
-                      <Stack
-                        direction="row"
-                        spacing={{ sm: "10px", xl: "4px", xxl: "10px" }}
-                        mb="6px"
-                      >
-                        <VuiBox
-                          bgColor="info"
-                          display="flex"
-                          justifyContent="center"
-                          alignItems="center"
-                          sx={{ borderRadius: "6px", width: "25px", height: "25px" }}
-                        >
-                          <FaShoppingCart color="#fff" size="12px" />
-                        </VuiBox>
-                        <VuiTypography color="text" variant="button" fontWeight="medium">
-                          Автомобиль
-                        </VuiTypography>
-                      </Stack>
-                      <VuiTypography color="white" variant="lg" fontWeight="bold" mb="8px">
-                        45000
-                      </VuiTypography>
-                      <VuiProgress value={60} color="info" sx={{ background: "#2D2E5F" }} />
-                    </Grid>
-                    <Grid item xs={6} md={3} lg={3}>
-                      <Stack
-                        direction="row"
-                        spacing={{ sm: "10px", xl: "4px", xxl: "10px" }}
-                        mb="6px"
-                      >
-                        <VuiBox
-                          bgColor="info"
-                          display="flex"
-                          justifyContent="center"
-                          alignItems="center"
-                          sx={{ borderRadius: "6px", width: "25px", height: "25px" }}
-                        >
-                          <IoBuild color="#fff" size="12px" />
-                        </VuiBox>
-                        <VuiTypography color="text" variant="button" fontWeight="medium">
-                          Одежда
-                        </VuiTypography>
-                      </Stack>
-                      <VuiTypography color="white" variant="lg" fontWeight="bold" mb="8px">
-                        50000
-                      </VuiTypography>
-                      <VuiProgress value={60} color="info" sx={{ background: "#2D2E5F" }} />
-                    </Grid>
-                  </Grid>
+                  </VuiBox>  
                 </VuiBox>
               </Card>
             </Grid>

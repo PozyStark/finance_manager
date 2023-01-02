@@ -53,7 +53,7 @@ function SignIn() {
           </VuiTypography>
           
           <VuiBox mb={0.25}>
-            <VuiBox mb={0.5} ml={0.5}>
+            <VuiBox mb={0.25} ml={0.25}>
               <VuiTypography component="label" variant="button" color="white" fontWeight="medium">
                 Имя
               </VuiTypography>
@@ -77,7 +77,32 @@ function SignIn() {
             </GradientBorder>
           </VuiBox>
           <VuiBox mb={0.25}>
-            <VuiBox mb={0.5} ml={0.5}>
+            <VuiBox mb={0.25} ml={0.25}>
+              <VuiTypography component="label" variant="button" color="white" fontWeight="medium">
+                Фамилия
+              </VuiTypography>
+            </VuiBox>
+            <GradientBorder
+              minWidth="100%"
+              borderRadius={borders.borderRadius.lg}
+              padding="1px"
+              backgroundImage={radialGradient(
+                palette.gradients.borderLight.main,
+                palette.gradients.borderLight.state,
+                palette.gradients.borderLight.angle
+              )}
+            >
+              <VuiInput
+                type="email"
+                placeholder="Введите вашу фамилию..."
+                sx={({ typography: { size } }) => ({
+                  fontSize: size.sm,
+                })}
+              />
+            </GradientBorder>
+          </VuiBox>
+          <VuiBox mb={0.25}>
+            <VuiBox mb={0.25} ml={0.25}>
               <VuiTypography component="label" variant="button" color="white" fontWeight="medium">
                 Email
               </VuiTypography>
@@ -102,9 +127,34 @@ function SignIn() {
             </GradientBorder>
           </VuiBox>
           <VuiBox mb={0.25}>
-            <VuiBox mb={0.5} ml={0.5}>
+            <VuiBox mb={0.25} ml={0.25}>
               <VuiTypography component="label" variant="button" color="white" fontWeight="medium">
                 Пароль
+              </VuiTypography>
+            </VuiBox>
+            <GradientBorder
+              minWidth="100%"
+              borderRadius={borders.borderRadius.lg}
+              padding="1px"
+              backgroundImage={radialGradient(
+                palette.gradients.borderLight.main,
+                palette.gradients.borderLight.state,
+                palette.gradients.borderLight.angle
+              )}
+            >
+              <VuiInput
+                type="password"
+                placeholder="Ваш пароль..."
+                sx={({ typography: { size } }) => ({
+                  fontSize: size.sm,
+                })}
+              />
+            </GradientBorder>
+          </VuiBox>
+          <VuiBox mb={0.25}>
+            <VuiBox mb={0.25} ml={0.25}>
+              <VuiTypography component="label" variant="button" color="white" fontWeight="medium">
+                Подтвердите пароль
               </VuiTypography>
             </VuiBox>
             <GradientBorder
@@ -143,7 +193,7 @@ function SignIn() {
               Регистрация
             </VuiButton>
           </VuiBox>
-          <VuiBox mt={0.5} textAlign="center">
+          <VuiBox mt={0.25} textAlign="center">
             <VuiTypography variant="button" color="text" fontWeight="regular">
               У вас уже есть аккаунт?{" "}
               <VuiTypography

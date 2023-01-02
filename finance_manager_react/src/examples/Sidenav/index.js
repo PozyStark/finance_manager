@@ -167,23 +167,14 @@ function Sidenav({ color, brandName, routes, ...rest }) {
                 })
               }
             >
-              <SimmmpleLogo size="24px" />
             </VuiBox>
             <VuiTypography
               variant="button"
-              textGradient={true}
-              color="logo"
-              fontSize={14}
+              color="white"
+              fontSize={32}
               letterSpacing={2}
               fontWeight="medium"
-              sx={
-                ((theme) => sidenavLogoLabel(theme, { miniSidenav, transparentSidenav }),
-                {
-                  opacity: miniSidenav || (miniSidenav && transparentSidenav) ? 0 : 1,
-                  maxWidth: miniSidenav || (miniSidenav && transparentSidenav) ? 0 : "100%",
-                  margin: "0 auto",
-                })
-              }
+             
             >
               {brandName}
             </VuiTypography>

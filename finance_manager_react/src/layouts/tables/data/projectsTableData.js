@@ -60,6 +60,11 @@ export default {
         </VuiTypography>
       ),
       Прогресс: <Completion value={60} color="info" />,
+      Исправить: (
+        <VuiTypography variant="button" color="white" fontWeight="medium">
+          ...
+        </VuiTypography>
+      ),
       action,
     },
     {
@@ -82,6 +87,11 @@ export default {
         </VuiTypography>
       ),
       Прогресс: <Completion value={60} color="info" />,
+      Исправить: (
+        <VuiTypography variant="button" color="white" fontWeight="medium">
+          ...
+        </VuiTypography>
+      ),
       action,
     },
     {
@@ -104,6 +114,11 @@ export default {
         </VuiTypography>
       ),
       Прогресс: <Completion value={60} color="info" />,
+      Исправить: (
+        <VuiTypography variant="button" color="white" fontWeight="medium">
+          ...
+        </VuiTypography>
+      ),
       action,
     },
     {
@@ -126,6 +141,11 @@ export default {
         </VuiTypography>
       ),
       Прогресс: <Completion value={60} color="info" />,
+      Исправить: (
+        <VuiTypography variant="button" color="white" fontWeight="medium">
+          ...
+        </VuiTypography>
+      ),
       action,
     },
     {
@@ -148,6 +168,11 @@ export default {
         </VuiTypography>
       ),
       Прогресс: <Completion value={60} color="info" />,
+      Исправить: (
+        <VuiTypography variant="button" color="white" fontWeight="medium">
+          ...
+        </VuiTypography>
+      ),
       action,
     },
   ],

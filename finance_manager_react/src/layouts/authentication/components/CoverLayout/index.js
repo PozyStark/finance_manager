@@ -54,7 +54,7 @@ function CoverLayout({
         }}
       >
         <VuiBox
-          mt={top}
+          mt="" 
           ml="auto !important"
           sx={({ breakpoints }) => ({
             [breakpoints.down("xl")]: {

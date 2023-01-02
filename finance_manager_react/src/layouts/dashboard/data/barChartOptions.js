@@ -20,19 +20,19 @@ export const barChartOptionsDashboard = {
   },
   xaxis: {
     categories: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    show: false,
+    show: true,
     labels: {
-      show: false,
+      show: true,
       style: {
         colors: "#fff",
         fontSize: "10px",
       },
     },
     axisBorder: {
-      show: false,
+      show: true,
     },
     axisTicks: {
-      show: false,
+      show: true,
     },
   },
   yaxis: {
@@ -48,7 +48,7 @@ export const barChartOptionsDashboard = {
     },
   },
   grid: {
-    show: false,
+    show: true,
   },
   fill: {
     colors: "#fff",

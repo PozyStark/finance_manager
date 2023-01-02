@@ -44,8 +44,8 @@ function Overview() {
           <Grid
             item
             xs={12}
-            xl={4}
-            xxl={3}
+            xl={6}
+            xxl={6}
             sx={({ breakpoints }) => ({
               minHeight: "400px",
               [breakpoints.only("xl")]: {
@@ -55,24 +55,12 @@ function Overview() {
           >
             <PlatformSettings />
           </Grid>
+          
           <Grid
             item
             xs={12}
-            xl={5}
+            xl={6}
             xxl={6}
-            sx={({ breakpoints }) => ({
-              [breakpoints.only("xl")]: {
-                gridArea: "2 / 1 / 3 / 3",
-              },
-            })}
-          >
-            <CarInformations />
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            xl={3}
-            xxl={3}
             sx={({ breakpoints }) => ({
               [breakpoints.only("xl")]: {
                 gridArea: "1 / 2 / 2 / 3",
@@ -81,7 +69,7 @@ function Overview() {
           >
             <ProfileInfoCard
               title="Профиль"
-              description="Приветик!  Рикардо милос."
+              description="Здравствуй! Рикардо милос."
               info={{
                 Имя: "Рикардо Милос",
                 Мобильный: "2333333",

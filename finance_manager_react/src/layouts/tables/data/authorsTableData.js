@@ -5,11 +5,12 @@ import VuiTypography from "components/VuiTypography";
 import VuiAvatar from "components/VuiAvatar";
 
 // Images
-import avatar1 from "assets/images/avatar1.png";
-import avatar2 from "assets/images/avatar2.png";
+
+import magaz from "assets/images/5.png";
 
 
-function Author({ image, name, email }) {
+
+function Author({ image, name, info }) {
   return (
     <VuiBox display="flex" alignItems="center" px={1} py={0.5}>
       <VuiBox mr={2}>
@@ -20,7 +21,7 @@ function Author({ image, name, email }) {
           {name}
         </VuiTypography>
         <VuiTypography variant="caption" color="text">
-          {email}
+          {info}
         </VuiTypography>
       </VuiBox>
     </VuiBox>
@@ -43,7 +44,6 @@ function Function({ job, org }) {
 export default {
   columns: [
     { name: "Автор", align: "left" },
-    { name: "Позиция", align: "left" },
     { name: "Сумма", align: "center" },
     { name: "Дата", align: "center" },
     { name: "Исправить", align: "center" },
@@ -51,8 +51,7 @@ export default {
 
   rows: [
     {
-      Автор: <Author image={avatar2} name="Ван Даркхолм" email="gachimuchi@simmmple.com" />,
-      Позиция: <Function job="Жена" org="Растратчик" />, 
+      Автор: <Author image={magaz} name="Пятерочка" info="Кредитка" />,
       Сумма: (
         10000
       ),
@@ -68,8 +67,7 @@ export default {
       ),
     },
     {
-      Автор: <Author image={avatar2} name="Ван Даркхолм" email="gachimuchi@simmmple.com" />,
-      Позиция: <Function job="Жена" org="Растратчик" />,
+      Автор: <Author image={magaz} name="Пятерочка" info="Кредитка" />,
       Сумма: (
         10000
       ),
@@ -85,8 +83,7 @@ export default {
       ),
     },
     {
-      Автор: <Author image={avatar2} name="Ван Даркхолм" email="gachimuchi@simmmple.com" />,
-      Позиция: <Function job="Жена" org="Растратчик" />,
+      Автор: <Author image={magaz} name="Пятерочка" info="Наличные" />,
       Сумма: (
         10000
       ),
@@ -102,8 +99,7 @@ export default {
       ),
     },
     {
-      Автор: <Author image={avatar1} name="Рикардо Милос" email="gachimuchi@simmmple.com" />,
-      Позиция: <Function job="Муж" org="Добытчик" />,
+      Автор: <Author image={magaz} name="Пятерочка" info="Кредитка" />,
       Сумма: (
         10000
       ),
@@ -119,8 +115,7 @@ export default {
       ),
     },
     {
-      Автор: <Author image={avatar1} name="Рикардо Милос" email="gachimuchi@simmmple.com" />,
-      Позиция: <Function job="Муж" org="Добытчик" />,
+      Автор: <Author image={magaz} name="Пятерочка" info="Кредитка" />,
       Сумма: (
         10000
       ),
@@ -136,8 +131,7 @@ export default {
       ),
     },
     {
-      Автор: <Author image={avatar2} name="Ван Даркхолм" email="gachimuchi@simmmple.com"/>,
-      Позиция: <Function job="Жена" org="Растратчик" />,
+      Автор: <Author image={magaz} name="Пятерочка" info="Наличные"/>,
       Сумма: (
         10000
       ),
