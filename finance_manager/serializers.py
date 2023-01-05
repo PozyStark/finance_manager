@@ -1,70 +1,123 @@
 from rest_framework import serializers
-from finance_manager.models import Expenses, FinanceUser
+from rest_framework.exceptions import ValidationError
+
+from finance_manager.models import Expenses, User
+from django.contrib.auth import authenticate
+from finance_manager.password_validation import PasswordValidation
 
 
-class FinanceUserRegisterSerializer(serializers.ModelSerializer):
-    """Сериализатор для кастомного пользователя
+class UserRegisterSerializer(serializers.ModelSerializer):
+    """Сериализатор для регистрации кастомного пользователя
     """
 
-    password_confirm = serializers.CharField(max_length=255, required=True)
+    confirm_password = serializers.CharField(max_length=255, required=True)
+
+    def validate_password(self, password):
+        return PasswordValidation(
+            password=password,
+            length=8,
+            excluded_chars=[PasswordValidation.RUS_CHARS_LOW, PasswordValidation.RUS_CHARS_UPPER],
+            must_contain=PasswordValidation.SPECIAL_CHARACTERS
+        ).validate()
 
     def save(self, **kwargs):
-        finance_user = FinanceUser(
+        finance_user = User(
             email=self.validated_data['email'],
             first_name=self.validated_data['first_name'],
             last_name=self.validated_data['last_name']
         )
         password = self.validated_data['password']
-        password_confirm = self.validated_data['password_confirm']
+        confirm_password = self.validated_data['confirm_password']
 
-        if password != password_confirm:
-            raise serializers.ValidationError({password: 'password matching error'})
+        if password != confirm_password:
+            raise ValidationError({'confirm_password': ['password matching error']})
 
         finance_user.set_password(password)
         finance_user.save()
         return finance_user
 
     class Meta:
-        model = FinanceUser
+        model = User
         fields = [
             'email',
             'first_name',
             'last_name',
             'password',
-            'password_confirm'
+            'confirm_password'
         ]
 
 
-class FinanceUserUpdateSerializer(serializers.Serializer):
+class UserProfileUpdateSerializer(serializers.Serializer):
+    """ Сериализатор для обновления информации о пользователе
+    """
 
-    email = serializers.EmailField(max_length=255, required=False, allow_blank=True)
+    email = serializers.EmailField(max_length=255, required=False, allow_blank=False, allow_null=False)
     number = serializers.CharField(max_length=18, required=False, allow_blank=True)
     first_name = serializers.CharField(max_length=255, required=False, allow_blank=True)
     last_name = serializers.CharField(max_length=255, required=False, allow_blank=True)
-    password = serializers.CharField(required=False, write_only=True, allow_blank=True)
-    password_confirm = serializers.CharField(required=False, write_only=True, allow_blank=True)
 
     def update(self, instance, validated_data):
         instance.email = validated_data.get('email', instance.email)
+        instance.number = validated_data.get('number', instance.number)
         instance.first_name = validated_data.get('first_name', instance.first_name)
         instance.last_name = validated_data.get('last_name', instance.last_name)
-        password = validated_data.get('password', None)
-        password_confirm = validated_data.get('password_confirm', None)
+        instance.save()
 
-        if password != password_confirm:
-            raise serializers.ValidationError({password: 'password matching error'})
+        return instance
 
-        if password is not None and password_confirm is not None:
-            instance.set_password(validated_data.get('password'))
+    def create(self, validated_data):
+        pass
+
+
+class UserChangePasswordSerializer(serializers.Serializer):
+    """ Сериализотор для обновления пароля
+    """
+
+    old_password = serializers.CharField(
+        max_length=255,
+        required=True,
+        write_only=True,
+        allow_blank=False,
+        allow_null=False
+    )
+    new_password = serializers.CharField(max_length=255, required=True, write_only=True)
+    confirm_password = serializers.CharField(max_length=255, required=True, write_only=True)
+
+    def validate_old_password(self, old_password):
+        user = authenticate(email=self.context['user'].email, password=old_password)
+        if user:
+            return old_password
+        raise ValidationError('incorrect password')
+
+    def validate_new_password(self, new_password):
+        return PasswordValidation(
+            password=new_password,
+            length=8,
+            excluded_chars=[PasswordValidation.RUS_CHARS_LOW, PasswordValidation.RUS_CHARS_UPPER],
+            must_contain=PasswordValidation.SPECIAL_CHARACTERS
+        ).validate()
+
+    def update(self, instance, validated_data):
+        old_password = self.validated_data['old_password']
+        new_password = self.validated_data['new_password']
+        confirm_password = self.validated_data['confirm_password']
+
+        if new_password != confirm_password:
+            raise ValidationError({'confirm_password': ['password matching error']})
+
+        instance.set_password(new_password)
         instance.save()
         return instance
+
+    def create(self, validated_data):
+        pass
 
 
 class ExpensesSerializer(serializers.Serializer):
 
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     # id = serializers.IntegerField(required=True)
-    name = serializers.CharField(required=True)
+    name = serializers.CharField(max_length=255, required=True)
     amount = serializers.FloatField(required=True)
     date = serializers.DateField(required=False)
 
@@ -82,4 +135,4 @@ class ExpensesSerializer(serializers.Serializer):
 class ExpensesModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Expenses
-        fields = ['id', 'user', 'name', 'amount']
+        fields = ['id', 'user', 'name', 'amount', 'date']
