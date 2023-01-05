@@ -129,7 +129,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Аутентификация через собственную модель пользователя
-AUTH_USER_MODEL = 'finance_manager.FinanceUser'
+AUTH_USER_MODEL = 'finance_manager.User'
 
 # Настройки для RestAPI
 # Возможна авторизация как на основе сессиий так и на основе токенов

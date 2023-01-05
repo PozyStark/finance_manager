@@ -4,7 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User, PermissionsMixin
 
 
-class FinanceUserManager(BaseUserManager):
+class UserManager(BaseUserManager):
     """Менеджер для создания кастомного пользователя
     """
 
@@ -38,7 +38,7 @@ class FinanceUserManager(BaseUserManager):
         return self._create_user(email, password, **extra_fields)
 
 
-class FinanceUser(AbstractBaseUser, PermissionsMixin):
+class User(AbstractBaseUser, PermissionsMixin):
     """Модель кастомного пользователя для авторизации по полю email
     """
 
@@ -51,20 +51,20 @@ class FinanceUser(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(null=True, blank=True, auto_now=True)
 
-    objects = FinanceUserManager()
+    objects = UserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['number']
 
     class Meta:
-        verbose_name = 'FinanceUser'
-        verbose_name_plural = 'FinanceUsers'
+        verbose_name = 'User'
+        verbose_name_plural = 'Users'
 
 
 class Expenses(models.Model):
     """Модель содержит все возможные траты пользователя"""
 
-    user = models.ForeignKey(FinanceUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255, null=False, blank=False)
     amount = models.FloatField(default=0, null=False, blank=False)
     date = models.DateField(auto_now_add=True)
@@ -80,7 +80,7 @@ class Expenses(models.Model):
 class RegularExpenses(models.Model):
     """Модель содержит регулярные траты пользователя"""
 
-    user = models.ForeignKey(FinanceUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255, null=False, blank=False)
     amount = models.FloatField(default=0, null=False, blank=False)
 
@@ -95,7 +95,7 @@ class RegularExpenses(models.Model):
 class CashIncomes(models.Model):
     """Модель содержит все возможные доходы пользователя"""
 
-    user = models.ForeignKey(FinanceUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255, null=False, blank=False)
     amount = models.FloatField(default=0, null=False, blank=False)
     regular = models.BooleanField(default=False, null=False, blank=False)
@@ -112,7 +112,7 @@ class CashIncomes(models.Model):
 class Banks(models.Model):
     """Модель содержит цели для накопления"""
 
-    user = models.ForeignKey(FinanceUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255, null=False, blank=False)
     required_amount = models.FloatField(default=0, null=False, blank=False)
     available_amount = models.FloatField(default=0, null=False, blank=False)
