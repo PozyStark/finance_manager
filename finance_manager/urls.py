@@ -1,17 +1,19 @@
 from django.urls import path
 
 from finance_manager.views import \
-    FinanceUserRegisterAPIView, \
-    FinanceUserProfileUpdateAPIView, \
-    FinanceUserChangePasswordAPIView, \
-    ExpensesAPIList, \
-    ExpenseDetailAPIView
+    UserRegisterAPIView, \
+    UserProfileUpdateAPIView, \
+    UserChangePasswordAPIView, \
+    ExpensesAPIView, \
+    ExpenseDetailAPIView,\
+    AddExpenseAPIView
 
 urlpatterns = [
-    path('register/', FinanceUserRegisterAPIView.as_view(), name='register'),
-    path('updateprofile/', FinanceUserProfileUpdateAPIView.as_view(), name='update_profile'),
-    path('changepassword/', FinanceUserChangePasswordAPIView.as_view(), name='change_password'),
+    path('register/', UserRegisterAPIView.as_view(), name='register'),
+    path('updateprofile/', UserProfileUpdateAPIView.as_view(), name='update_profile'),
+    path('changepassword/', UserChangePasswordAPIView.as_view(), name='change_password'),
 
-    path('expenseslist/', ExpensesAPIList.as_view(), name='expenses_list'),
+    path('expenses/', ExpensesAPIView.as_view(), name='expenses'),
+    path('addexpense/', AddExpenseAPIView.as_view(), name='add_expense'),
     path('expensedetail/<int:id>/', ExpenseDetailAPIView.as_view(), name='expense_detail')
 ]
