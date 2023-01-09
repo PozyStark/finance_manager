@@ -1,9 +1,11 @@
+import datetime
+
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
 from finance_manager.models import Expenses, User
 from django.contrib.auth import authenticate
-from finance_manager.password_validation import PasswordValidation
+from finance_manager.validators import PasswordValidation
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):
@@ -84,7 +86,8 @@ class UserChangePasswordSerializer(serializers.Serializer):
     confirm_password = serializers.CharField(max_length=255, required=True, write_only=True)
 
     def validate_old_password(self, old_password):
-        user = authenticate(email=self.context['user'].email, password=old_password)
+        user = self.context['request'].user
+        user = authenticate(email=user.email, password=old_password)
         if user:
             return old_password
         raise ValidationError('incorrect password')
@@ -113,16 +116,21 @@ class UserChangePasswordSerializer(serializers.Serializer):
         pass
 
 
-class ExpensesSerializer(serializers.Serializer):
+class ExpenseSerializer(serializers.Serializer):
 
-    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
-    # id = serializers.IntegerField(required=True)
+    id = serializers.IntegerField(required=False, read_only=True)
     name = serializers.CharField(max_length=255, required=True)
     amount = serializers.FloatField(required=True)
     date = serializers.DateField(required=False)
 
     def create(self, validated_data):
-        return Expenses.objects.create(**validated_data)
+        user = self.context['request'].user
+        return Expenses.objects.create(
+            user=user,
+            name=validated_data.get('name'),
+            amount=validated_data.get('amount'),
+            date=validated_data.get('date', datetime.date.today())
+        )
 
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name', instance.name)
@@ -130,9 +138,3 @@ class ExpensesSerializer(serializers.Serializer):
         instance.date = validated_data.get('date', instance.date)
         instance.save()
         return instance
-
-
-class ExpensesModelSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Expenses
-        fields = ['id', 'user', 'name', 'amount', 'date']
