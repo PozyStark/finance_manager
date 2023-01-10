@@ -1,14 +1,15 @@
 from rest_framework import status
-from rest_framework.generics import ListAPIView, UpdateAPIView, CreateAPIView, GenericAPIView
+from rest_framework.decorators import action
+from rest_framework.generics import ListAPIView, UpdateAPIView, CreateAPIView, GenericAPIView, get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from finance_manager.serializers import ExpenseSerializer,\
+from finance_manager.serializers import ExpenseSerializer, \
     UserRegisterSerializer, \
-    UserProfileUpdateSerializer,\
-    UserChangePasswordSerializer
+    UserProfileUpdateSerializer, \
+    UserChangePasswordSerializer, RegularExpenseSerializer
 
-from finance_manager.models import Expenses, User
+from finance_manager.models import Expenses, User, RegularExpenses
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 
@@ -46,7 +47,7 @@ class UserProfileUpdateAPIView(GenericAPIView):
         serializer = UserProfileUpdateSerializer(data=request.data)
         if serializer.is_valid():
             serializer.update(request.user, serializer.data)
-            return Response({'response': 'profile was updated'}, status=status.HTTP_200_OK)
+            return Response({'detail': 'profile was updated'}, status=status.HTTP_200_OK)
         return Response(serializer.errors)
 
 
@@ -61,7 +62,7 @@ class UserChangePasswordAPIView(GenericAPIView):
         serializer = UserChangePasswordSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.update(request.user, serializer.data)
-            return Response({'response': 'password changed'}, status=status.HTTP_200_OK)
+            return Response({'detail': 'password changed'}, status=status.HTTP_200_OK)
         return Response(serializer.errors)
 
 
@@ -70,56 +71,128 @@ class ExpensesAPIView(GenericAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = ExpenseSerializer
 
-    def get(self, request):
+    def get(self, request, id=None):
         user = request.user
+        if id:
+            expense = get_object_or_404(Expenses, user=user, id=id)
+            return Response(
+                {
+                    'expense': {
+                            'id': expense.id,
+                            'name': expense.name,
+                            'amount': expense.amount,
+                            'date': expense.date
+                        }
+                }, status=status.HTTP_200_OK
+            )
+
         expenses = Expenses.objects.filter(user=user)
         return Response(
-            {
-                'expenses': expenses.values('id', 'name', 'amount', 'date')
-            }, status=status.HTTP_200_OK
+            {'expenses': expenses.values('id', 'name', 'amount', 'date')},
+            status=status.HTTP_200_OK
         )
 
-
-class AddExpenseAPIView(GenericAPIView):
-
-    permission_classes = [IsAuthenticated]
-    serializer_class = ExpenseSerializer
-
     def post(self, request):
-
-        if request.data.get('expenses'):
-            serializer = ExpenseSerializer(data=request.data['expenses'], context={'request': request}, many=True)
+        expenses = request.data.get('expenses')
+        if expenses:
+            serializer = self.serializer_class(
+                data=expenses,
+                context={'request': request},
+                many=True
+            )
         else:
-            serializer = ExpenseSerializer(data=request.data, context={'request': request})
+            serializer = self.serializer_class(
+                data=request.data,
+                context={'request': request}
+            )
 
         if serializer.is_valid():
             serializer.create(serializer.data)
-            return Response({'response': 'expense create'}, status=status.HTTP_201_CREATED)
+            return Response(
+                {'detail': 'expense create'},
+                status=status.HTTP_201_CREATED
+            )
         return Response(serializer.errors)
 
+    def put(self, request, id):
 
-class ExpenseDetailAPIView(GenericAPIView):
+        user = request.user
+        expense = get_object_or_404(Expenses, user=user, id=id)
+
+        serializer = self.serializer_class(
+            data=request.data,
+            context={'request': request}
+        )
+        if serializer.is_valid():
+            serializer.update(expense, serializer.data)
+            return Response({'detail': 'expense updated'}, status=status.HTTP_200_OK)
+        return Response(serializer.errors)
+
+    def delete(self, request, id):
+        user = request.user
+        expense = get_object_or_404(Expenses, user=user, id=id)
+        expense.delete()
+        return Response({'detail': f'expense id:{id} deleted'})
+
+
+class RegularExpensesAPIView(GenericAPIView):
 
     permission_classes = [IsAuthenticated]
-    serializer_class = ExpenseSerializer
+    serializer_class = RegularExpenseSerializer
 
-    def get(self, request, id):
+    def get(self, request, id=None):
         user = request.user
-        expense = Expenses.objects.get(user=user, id=id)
+        if id:
+            regular_expense = get_object_or_404(RegularExpenses, user=user, id=id)
+            return Response(
+                {
+                    'regular_expense': {
+                        'id': regular_expense.id,
+                        'name': regular_expense.name,
+                        'amount': regular_expense.amount
+                    }
+                }, status=status.HTTP_200_OK
+            )
+
+        regular_expenses = RegularExpenses.objects.filter(user=user)
         return Response(
             {
-                'expense': {
-                    'id': expense.id,
-                    'name': expense.name,
-                    'amount': expense.amount,
-                    'date': expense.date
-                }
+                'regular_expenses': regular_expenses.values('id', 'name', 'amount')
             }
         )
 
+    def post(self, request):
+        regular_expenses = request.data.get('regular_expenses')
+        if regular_expenses:
+            serializer = self.serializer_class(
+                data=regular_expenses,
+                context={'request': request},
+                many=True
+            )
+        else:
+            serializer = self.serializer_class(
+                data=request.data,
+                context={'request': request}
+            )
+        if serializer.is_valid():
+            serializer.create(serializer.data)
+            return Response({'detail': 'regular expense create'}, status=status.HTTP_201_CREATED)
 
-class ExpensesAPIUpdate(UpdateAPIView):
-    queryset = Expenses.objects.all()
-    serializer_class = ExpenseSerializer
+        return Response(serializer.errors)
 
+    def put(self, request, id=None):
 
+        user = request.user
+        regular_expense = get_object_or_404(RegularExpenses, user=user, id=id)
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+
+        if serializer.is_valid():
+            serializer.update(regular_expense, serializer.data)
+            return Response({'detail': 'regular expense updated'})
+        return Response(serializer.errors)
+
+    def delete(self, request, id=None):
+        user = request.user
+        regular_expense = get_object_or_404(RegularExpenses, user=user, id=id)
+        regular_expense.delete()
+        return Response({'detail': f'regular expense id:{id} deleted'})
