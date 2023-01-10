@@ -3,7 +3,7 @@ import datetime
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
-from finance_manager.models import Expenses, User
+from finance_manager.models import Expenses, User, RegularExpenses
 from django.contrib.auth import authenticate
 from finance_manager.validators import PasswordValidation
 
@@ -118,7 +118,7 @@ class UserChangePasswordSerializer(serializers.Serializer):
 
 class ExpenseSerializer(serializers.Serializer):
 
-    id = serializers.IntegerField(required=False, read_only=True)
+    id = serializers.IntegerField(read_only=True)
     name = serializers.CharField(max_length=255, required=True)
     amount = serializers.FloatField(required=True)
     date = serializers.DateField(required=False)
@@ -127,8 +127,8 @@ class ExpenseSerializer(serializers.Serializer):
         user = self.context['request'].user
         return Expenses.objects.create(
             user=user,
-            name=validated_data.get('name'),
-            amount=validated_data.get('amount'),
+            name=validated_data['name'],
+            amount=validated_data['amount'],
             date=validated_data.get('date', datetime.date.today())
         )
 
@@ -136,5 +136,26 @@ class ExpenseSerializer(serializers.Serializer):
         instance.name = validated_data.get('name', instance.name)
         instance.amount = validated_data.get('amount', instance.amount)
         instance.date = validated_data.get('date', instance.date)
+        instance.save()
+        return instance
+
+
+class RegularExpenseSerializer(serializers.Serializer):
+
+    id = serializers.IntegerField(read_only=True)
+    name = serializers.CharField(max_length=255, required=True)
+    amount = serializers.FloatField(required=True)
+
+    def create(self, validated_data):
+        user = self.context['request'].user
+        return RegularExpenses.objects.create(
+            user=user,
+            name=validated_data['name'],
+            amount=validated_data['amount']
+        )
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.amount = validated_data.get('amount', instance.amount)
         instance.save()
         return instance
