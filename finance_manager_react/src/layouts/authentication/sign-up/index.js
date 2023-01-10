@@ -123,7 +123,9 @@ function SignIn() {
             </VuiTypography>
           </VuiBox>
           <VuiBox mt={1} mb={1}>
-            <VuiButton color="info" fullWidth>
+            <VuiButton color="info" fullWidth
+            component={Link}
+            to="/dashboard">
               Авторизация
             </VuiButton>
           </VuiBox>
