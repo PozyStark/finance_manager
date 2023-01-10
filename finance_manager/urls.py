@@ -4,9 +4,7 @@ from finance_manager.views import \
     UserRegisterAPIView, \
     UserProfileUpdateAPIView, \
     UserChangePasswordAPIView, \
-    ExpensesAPIView, \
-    ExpenseDetailAPIView,\
-    AddExpenseAPIView
+    ExpensesAPIView, RegularExpensesAPIView
 
 urlpatterns = [
     path('register/', UserRegisterAPIView.as_view(), name='register'),
@@ -14,6 +12,8 @@ urlpatterns = [
     path('changepassword/', UserChangePasswordAPIView.as_view(), name='change_password'),
 
     path('expenses/', ExpensesAPIView.as_view(), name='expenses'),
-    path('addexpense/', AddExpenseAPIView.as_view(), name='add_expense'),
-    path('expensedetail/<int:id>/', ExpenseDetailAPIView.as_view(), name='expense_detail')
+    path('expenses/<int:id>/', ExpensesAPIView.as_view(), name='expenses_detail'),
+
+    path('regular-expenses/', RegularExpensesAPIView.as_view(), name='regular_expenses'),
+    path('regular-expenses/<int:id>/', RegularExpensesAPIView.as_view(), name='regular_expenses_detail'),
 ]
