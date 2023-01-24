@@ -7,9 +7,9 @@ from rest_framework.views import APIView
 from finance_manager.serializers import ExpenseSerializer, \
     UserRegisterSerializer, \
     UserProfileUpdateSerializer, \
-    UserChangePasswordSerializer, RegularExpenseSerializer
+    UserChangePasswordSerializer, RegularExpenseSerializer, CashIncomeSerializer, BankSerializer
 
-from finance_manager.models import Expenses, User, RegularExpenses
+from finance_manager.models import Expenses, User, RegularExpenses, CashIncomes, Banks
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 
@@ -196,3 +196,128 @@ class RegularExpensesAPIView(GenericAPIView):
         regular_expense = get_object_or_404(RegularExpenses, user=user, id=id)
         regular_expense.delete()
         return Response({'detail': f'regular expense id:{id} deleted'})
+
+
+class CashIncomesAPIView(GenericAPIView):
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = CashIncomeSerializer
+
+    def get(self, request):
+        user = request.user
+        if id:
+            cash_income = get_object_or_404(CashIncomes, user=user, id=id)
+            return Response(
+                {
+                    'cash_income': {
+                        'id': cash_income.id,
+                        'name': cash_income.name,
+                        'amount': cash_income.amount,
+                        'date': cash_income.date
+                    }
+                }, status=status.HTTP_200_OK
+            )
+
+        cash_incomes = CashIncomes.objects.filter(user=user)
+        return Response(
+            {
+                'cash_incomes': cash_incomes.values('id', 'name', 'amount', 'date')
+            }
+        )
+
+    def post(self, request):
+        cash_incomes = request.data.get('cash_incomes')
+        if cash_incomes:
+            serializer = self.serializer_class(
+                data=cash_incomes,
+                context={'request': request},
+                many=True
+            )
+        else:
+            serializer = self.serializer_class(
+                data=request.data,
+                context={'request': request}
+            )
+        if serializer.is_valid():
+            serializer.create(serializer.data)
+            return Response({'detail': 'cash incomes create'}, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors)
+
+    def put(self, request):
+        user = request.user
+        cash_income = get_object_or_404(CashIncomes, user=user, id=id)
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+
+        if serializer.is_valid():
+            serializer.update(CashIncomes, serializer.data)
+            return Response({'detail': 'cash income updated'})
+        return Response(serializer.errors)
+
+    def delete(self, request):
+        user = request.user
+        cash_income = get_object_or_404(CashIncomes, user=user, id=id)
+        cash_income.delete()
+        return Response({'detail': f'cash income id:{id} deleted'})
+
+
+class BanksAPIView(GenericAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = BankSerializer
+
+    def get(self, request):
+        user = request.user
+        if id:
+            bank = get_object_or_404(Banks, user=user, id=id)
+            return Response(
+                {
+                    'cash_income': {
+                        'id': bank.id,
+                        'name': bank.name,
+                        'required_amount': bank.required_amount,
+                        'available_amount': bank.available_amount
+                    }
+                }, status=status.HTTP_200_OK
+            )
+
+        banks = Banks.objects.filter(user=user)
+        return Response(
+            {
+                'banks': banks.values('id', 'name', 'required_amount', 'available_amount')
+            }
+        )
+
+    def post(self, request):
+        banks = request.data.get('banks')
+        if banks:
+            serializer = self.serializer_class(
+                data=banks,
+                context={'request': request},
+                many=True
+            )
+        else:
+            serializer = self.serializer_class(
+                data=request.data,
+                context={'request': request}
+            )
+        if serializer.is_valid():
+            serializer.create(serializer.data)
+            return Response({'detail': 'banks create'}, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors)
+
+    def put(self, request):
+        user = request.user
+        bank = get_object_or_404(Banks, user=user, id=id)
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+
+        if serializer.is_valid():
+            serializer.update(Banks, serializer.data)
+            return Response({'detail': 'bank updated'})
+        return Response(serializer.errors)
+
+    def delete(self, request):
+        user = request.user
+        bank = get_object_or_404(Banks, user=user, id=id)
+        bank.delete()
+        return Response({'detail': f'bank id:{id} deleted'})
