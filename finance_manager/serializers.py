@@ -3,7 +3,7 @@ import datetime
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
-from finance_manager.models import Expenses, User, RegularExpenses
+from finance_manager.models import Expenses, User, RegularExpenses, CashIncomes, Banks
 from django.contrib.auth import authenticate
 from finance_manager.validators import PasswordValidation
 
@@ -159,3 +159,52 @@ class RegularExpenseSerializer(serializers.Serializer):
         instance.amount = validated_data.get('amount', instance.amount)
         instance.save()
         return instance
+
+
+class CashIncomeSerializer(serializers.Serializer):
+
+    id = serializers.IntegerField(read_only=True)
+    name = serializers.CharField(max_length=255, required=True)
+    amount = serializers.FloatField(required=True)
+    regular = serializers.BooleanField(required=True)
+    date = serializers.DateField(required=False)
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.amount = validated_data.get('amount', instance.amount)
+        instance.regular = validated_data.get('regular', instance.regular)
+        instance.date = validated_data.get('date', instance.date)
+        instance.save()
+        return instance
+
+    def create(self, validated_data):
+        user = self.context['request'].user
+        return CashIncomes.objects.create(
+            user=user,
+            name=validated_data['name'],
+            amount=validated_data['amount'],
+            regular=validated_data['regular'],
+            date=validated_data.get('date', datetime.date.today())
+        )
+
+
+class BankSerializer(serializers.Serializer):
+
+    id = serializers.IntegerField(read_only=True)
+    name = serializers.CharField(max_length=255, required=True)
+    required_amount = serializers.FloatField(required=True)
+    available_amount = serializers.FloatField(required=True)
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.required_amount = validated_data.get('required_amount', instance.required_amount)
+        instance.available_amount = validated_data.get('available_amount', instance.available_amount)
+        instance.save()
+        return instance
+
+    def create(self, validated_data):
+        return Banks.objects.create(
+            name=validated_data['name'],
+            required_amount=validated_data['required_amount'],
+            available_amount=validated_data['available_amount']
+        )
