@@ -203,7 +203,9 @@ class BankSerializer(serializers.Serializer):
         return instance
 
     def create(self, validated_data):
+        user = self.context['request'].user
         return Banks.objects.create(
+            user=user,
             name=validated_data['name'],
             required_amount=validated_data['required_amount'],
             available_amount=validated_data['available_amount']
