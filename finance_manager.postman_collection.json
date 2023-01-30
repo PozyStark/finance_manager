@@ -1,0 +1,872 @@
+{
+	"info": {
+		"_postman_id": "08df8e5a-86f6-4e00-b7ad-a0558688a426",
+		"name": "finance_manager",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21091451"
+	},
+	"item": [
+		{
+			"name": "token/",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"paul.jax@gmail.ru\",\r\n    \"password\": \"1234567@\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/token/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"token",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "token/refresh/",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"refresh\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY3MzAwMzE0OSwiaWF0IjoxNjcyOTE2NzQ5LCJqdGkiOiIzMWNlYTg4NjIzZTI0YjEyOWRmYjU4OTQ2NjMzZjMxNiIsInVzZXJfaWQiOjJ9.oBSrnpMmJuD7VE4pg2S_YIvYPEvhRY1ErBL1DT-TZr0\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/token/refresh/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"token",
+						"refresh",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "token/verify/",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjczMDAzNDM1LCJpYXQiOjE2NzI5MTY3NDksImp0aSI6IjhiOGY1NGM4ZmZlZTRjNmVhMTA0YTMyZWQ2NTM5N2RiIiwidXNlcl9pZCI6Mn0.RrW0nqOOjOJeVo_EiueXOHGRaOKf42_cZN39cQGUMk\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/token/verify/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"token",
+						"verify",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register/",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"paul@gmail.ru\",\r\n    \"number\": \"89121545772\",\r\n    \"first_name\": \"Паул\",\r\n    \"last_name\": \"Джаксович\",\r\n    \"password\": \"1234567*\",\r\n    \"confirm_password\": \"1234567*\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/finance_manager/register/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"finance_manager",
+						"register",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "change-password/",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjcyNzQyNjc1LCJpYXQiOjE2NzI2NTYyNzUsImp0aSI6IjQ1M2RlZDA0YTc0MTRmNjBiYzExNzJlNDg0NWMyNzYxIiwidXNlcl9pZCI6Mn0.1ya8LT_BiSopiarRG8KYNRO24QR4auhl5xlBR1CLQ2Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjcyNzM0ODc0LCJpYXQiOjE2NzI2NDg0NzQsImp0aSI6ImQ5ZjEwMGFjYzczYTQ1MjI4ZThmNTdjNGE2MDhiYzY1IiwidXNlcl9pZCI6MX0.UZZqpIYzm3vfLKV_ZX88vUYDSrXklBfopr3_2eW70Hw",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"old_password\": \"1234567@\",\r\n    \"new_password\": \"1234567@\",\r\n    \"confirm_password\": \"1234567@\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/finance_manager/changepassword/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"finance_manager",
+						"changepassword",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update-profile/",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjcyNzQyNjc1LCJpYXQiOjE2NzI2NTYyNzUsImp0aSI6IjQ1M2RlZDA0YTc0MTRmNjBiYzExNzJlNDg0NWMyNzYxIiwidXNlcl9pZCI6Mn0.1ya8LT_BiSopiarRG8KYNRO24QR4auhl5xlBR1CLQ2Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjcyNzM0ODc0LCJpYXQiOjE2NzI2NDg0NzQsImp0aSI6ImQ5ZjEwMGFjYzczYTQ1MjI4ZThmNTdjNGE2MDhiYzY1IiwidXNlcl9pZCI6MX0.UZZqpIYzm3vfLKV_ZX88vUYDSrXklBfopr3_2eW70Hw",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"number\": \"89121545772\",\r\n    \"first_name\": \"Ninga\",\r\n    \"last_name\": \"Japoshka\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/finance_manager/updateprofile/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"finance_manager",
+						"updateprofile",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "expenses/",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjczMzMwMTQ0LCJpYXQiOjE2NzMyNDM3NDQsImp0aSI6IjRkOTE0YmZhYjE0OTQzOGVhZTY3YWFmZWJlZWI5MTIwIiwidXNlcl9pZCI6Mn0.fScDqEyUZm3kuhehm2qVhw2zc5fiFv8aM9NdlT9xOMk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjcyMjk1NDU0LCJpYXQiOjE2NzIyMDkwNTQsImp0aSI6ImI4MjgwYTFiYzVlNDRjZjU5MmUzOWUzNWI0N2FmMTg0IiwidXNlcl9pZCI6MX0.xKbBllismp6pPUO9f8lOA0_7C1rwJmqbxD09ALDsZSQ",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/finance_manager/expenses/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"finance_manager",
+						"expenses",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "expenses/<int:id>/",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjczMzMwMTQ0LCJpYXQiOjE2NzMyNDM3NDQsImp0aSI6IjRkOTE0YmZhYjE0OTQzOGVhZTY3YWFmZWJlZWI5MTIwIiwidXNlcl9pZCI6Mn0.fScDqEyUZm3kuhehm2qVhw2zc5fiFv8aM9NdlT9xOMk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/finance_manager/expenses/3/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"finance_manager",
+						"expenses",
+						"3",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "expenses/ (add-many)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjczMzMwMTQ0LCJpYXQiOjE2NzMyNDM3NDQsImp0aSI6IjRkOTE0YmZhYjE0OTQzOGVhZTY3YWFmZWJlZWI5MTIwIiwidXNlcl9pZCI6Mn0.fScDqEyUZm3kuhehm2qVhw2zc5fiFv8aM9NdlT9xOMk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"expenses\":[\r\n        {\r\n            \"name\": \"пепилатс lada\",\r\n            \"amount\": 650000,\r\n            \"date\": \"2023-12-31\"\r\n        },\r\n        {\r\n            \"name\": \"пепилатс kia\",\r\n            \"amount\": 650000,\r\n            \"date\": \"2023-12-31\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/finance_manager/expenses/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"finance_manager",
+						"expenses",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "expenses/ (add-one)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjczMzMwMTQ0LCJpYXQiOjE2NzMyNDM3NDQsImp0aSI6IjRkOTE0YmZhYjE0OTQzOGVhZTY3YWFmZWJlZWI5MTIwIiwidXNlcl9pZCI6Mn0.fScDqEyUZm3kuhehm2qVhw2zc5fiFv8aM9NdlT9xOMk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"пепилатс\",\r\n    \"amount\": 650000,\r\n    \"date\": \"2023-12-31\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/finance_manager/expenses/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"finance_manager",
+						"expenses",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "expenses/<int:id>/",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjczNDE4Mzc5LCJpYXQiOjE2NzMzMzE5NzksImp0aSI6IjA1ZTRhMDdhYmNkZjRkNDliMGMwNzJkNTQzYzExNTNjIiwidXNlcl9pZCI6Mn0.nj4MNRH3ABJglWVJNVw1JqgmoeWCd58WXCiqR_-niQ4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"шоколад\",\r\n    \"amount\": 30.0,\r\n    \"date\": \"2023-01-02\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/finance_manager/expenses/1/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"finance_manager",
+						"expenses",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "expenses/<int:id>/",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/finance_manager/expenses/1/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"finance_manager",
+						"expenses",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "regular-expenses/ (add-one)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjczNDE4Mzc5LCJpYXQiOjE2NzMzMzE5NzksImp0aSI6IjA1ZTRhMDdhYmNkZjRkNDliMGMwNzJkNTQzYzExNTNjIiwidXNlcl9pZCI6Mn0.nj4MNRH3ABJglWVJNVw1JqgmoeWCd58WXCiqR_-niQ4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"кредит\",\r\n    \"amount\": 16000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/finance_manager/regular-expenses/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"finance_manager",
+						"regular-expenses",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "regular-expenses/ (add-many)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/finance_manager/regular-expenses/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"finance_manager",
+						"regular-expenses",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "regular-expenses/<int:id>/",
+			"request": {
+				"method": "PUT",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "regular-expenses/",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjczNDE4Mzc5LCJpYXQiOjE2NzMzMzE5NzksImp0aSI6IjA1ZTRhMDdhYmNkZjRkNDliMGMwNzJkNTQzYzExNTNjIiwidXNlcl9pZCI6Mn0.nj4MNRH3ABJglWVJNVw1JqgmoeWCd58WXCiqR_-niQ4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/finance_manager/regular-expenses/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"finance_manager",
+						"regular-expenses",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "regular-expenses/<int:id>/",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "regular-expenses/<int:id>/",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/finance_manager/regular-expenses/3/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"finance_manager",
+						"regular-expenses",
+						"3",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cash-incomes/",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "cash-incomes/<int:id>/",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "cash-incomes/ (add-many)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc1MTQ5NDQ5LCJpYXQiOjE2NzUwNjMwNDksImp0aSI6ImFiNjg1NDNlYzE2ZTQ2M2E4YmRhOWY5NjE1YzlmODMwIiwidXNlcl9pZCI6Mn0.hmrE0zVUafOEk7heFT2x1V_Qm7FC7Rdor9pX8I3KZYs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cash_incomes\": [\r\n        {\r\n            \"name\": \"Зарплата\",\r\n            \"amount\": 95000,\r\n            \"regular\": true,\r\n            \"date\": \"2023-01-05\"\r\n        },\r\n        {\r\n            \"name\": \"Бизнес\",\r\n            \"amount\": 95000,\r\n            \"regular\": true,\r\n            \"date\": \"2023-01-06\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/finance_manager/cash-incomes/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"finance_manager",
+						"cash-incomes",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cash-incomes/<int:id>/",
+			"request": {
+				"method": "PUT",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "cash-incomes/<int:id>/",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc1MTQ5NDQ5LCJpYXQiOjE2NzUwNjMwNDksImp0aSI6ImFiNjg1NDNlYzE2ZTQ2M2E4YmRhOWY5NjE1YzlmODMwIiwidXNlcl9pZCI6Mn0.hmrE0zVUafOEk7heFT2x1V_Qm7FC7Rdor9pX8I3KZYs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/finance_manager/cash-incomes/1/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"finance_manager",
+						"cash-incomes",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "banks/",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "banks/<int:id>/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/finance_manager/banks/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"finance_manager",
+						"banks",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "banks/ (add-many)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc1MTQ5NDQ5LCJpYXQiOjE2NzUwNjMwNDksImp0aSI6ImFiNjg1NDNlYzE2ZTQ2M2E4YmRhOWY5NjE1YzlmODMwIiwidXNlcl9pZCI6Mn0.hmrE0zVUafOEk7heFT2x1V_Qm7FC7Rdor9pX8I3KZYs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"banks\": [\r\n        {\r\n            \"name\": \"Яхта\",\r\n            \"required_amount\": 30000000,\r\n            \"available_amount\": 500\r\n        },\r\n        {\r\n            \"name\": \"Синкпад\",\r\n            \"required_amount\": 30000000,\r\n            \"available_amount\": 500\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/finance_manager/banks/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"finance_manager",
+						"banks",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "banks/<int:id>/",
+			"request": {
+				"method": "PUT",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "banks/<int:id>/",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjczNDE4Mzc5LCJpYXQiOjE2NzMzMzE5NzksImp0aSI6IjA1ZTRhMDdhYmNkZjRkNDliMGMwNzJkNTQzYzExNTNjIiwidXNlcl9pZCI6Mn0.nj4MNRH3ABJglWVJNVw1JqgmoeWCd58WXCiqR_-niQ4",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
