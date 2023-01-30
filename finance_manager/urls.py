@@ -8,8 +8,8 @@ from finance_manager.views import \
 
 urlpatterns = [
     path('register/', UserRegisterAPIView.as_view(), name='register'),
-    path('updateprofile/', UserProfileUpdateAPIView.as_view(), name='update_profile'),
-    path('changepassword/', UserChangePasswordAPIView.as_view(), name='change_password'),
+    path('update-profile/', UserProfileUpdateAPIView.as_view(), name='update_profile'),
+    path('change-password/', UserChangePasswordAPIView.as_view(), name='change_password'),
 
     path('expenses/', ExpensesAPIView.as_view(), name='expenses'),
     path('expenses/<int:id>/', ExpensesAPIView.as_view(), name='expenses_detail'),
