@@ -1,13 +1,15 @@
 from rest_framework import status
-from rest_framework.decorators import action
-from rest_framework.generics import ListAPIView, UpdateAPIView, CreateAPIView, GenericAPIView, get_object_or_404
+from rest_framework.generics import CreateAPIView, GenericAPIView, get_object_or_404
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
-from finance_manager.serializers import ExpenseSerializer, \
+from finance_manager.serializers import \
+    ExpenseSerializer, \
     UserRegisterSerializer, \
     UserProfileUpdateSerializer, \
-    UserChangePasswordSerializer, RegularExpenseSerializer, CashIncomeSerializer, BankSerializer
+    UserChangePasswordSerializer,\
+    RegularExpenseSerializer,\
+    CashIncomeSerializer,\
+    BankSerializer
 
 from finance_manager.models import Expenses, User, RegularExpenses, CashIncomes, Banks
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -28,7 +30,7 @@ class UserRegisterAPIView(CreateAPIView):
 
         if serializer.is_valid():
             serializer.save()
-            data['response'] = 'user was created'
+            data['detail'] = 'user was created'
             return Response(data, status=status.HTTP_201_CREATED)
         else:
             data = serializer.errors
@@ -67,6 +69,8 @@ class UserChangePasswordAPIView(GenericAPIView):
 
 
 class ExpensesAPIView(GenericAPIView):
+    """ Обработчик для работы с тратами
+    """
 
     permission_classes = [IsAuthenticated]
     serializer_class = ExpenseSerializer
@@ -114,7 +118,7 @@ class ExpensesAPIView(GenericAPIView):
             )
         return Response(serializer.errors)
 
-    def put(self, request, id):
+    def put(self, request, id=None):
 
         user = request.user
         expense = get_object_or_404(Expenses, user=user, id=id)
@@ -128,7 +132,7 @@ class ExpensesAPIView(GenericAPIView):
             return Response({'detail': 'expense updated'}, status=status.HTTP_200_OK)
         return Response(serializer.errors)
 
-    def delete(self, request, id):
+    def delete(self, request, id=None):
         user = request.user
         expense = get_object_or_404(Expenses, user=user, id=id)
         expense.delete()
@@ -136,7 +140,8 @@ class ExpensesAPIView(GenericAPIView):
 
 
 class RegularExpensesAPIView(GenericAPIView):
-
+    """ Обработчик для работы с регулярными тратами
+    """
     permission_classes = [IsAuthenticated]
     serializer_class = RegularExpenseSerializer
 
@@ -200,10 +205,13 @@ class RegularExpensesAPIView(GenericAPIView):
 
 class CashIncomesAPIView(GenericAPIView):
 
+    """ Обработчик для работы с денежными поступлениями
+    """
+
     permission_classes = [IsAuthenticated]
     serializer_class = CashIncomeSerializer
 
-    def get(self, request):
+    def get(self, request, id=None):
         user = request.user
         if id:
             cash_income = get_object_or_404(CashIncomes, user=user, id=id)
@@ -213,6 +221,7 @@ class CashIncomesAPIView(GenericAPIView):
                         'id': cash_income.id,
                         'name': cash_income.name,
                         'amount': cash_income.amount,
+                        'regular': cash_income.regular,
                         'date': cash_income.date
                     }
                 }, status=status.HTTP_200_OK
@@ -221,7 +230,7 @@ class CashIncomesAPIView(GenericAPIView):
         cash_incomes = CashIncomes.objects.filter(user=user)
         return Response(
             {
-                'cash_incomes': cash_incomes.values('id', 'name', 'amount', 'date')
+                'cash_incomes': cash_incomes.values('id', 'name', 'amount', 'regular', 'date')
             }
         )
 
@@ -244,17 +253,17 @@ class CashIncomesAPIView(GenericAPIView):
 
         return Response(serializer.errors)
 
-    def put(self, request):
+    def put(self, request, id=None):
         user = request.user
         cash_income = get_object_or_404(CashIncomes, user=user, id=id)
         serializer = self.serializer_class(data=request.data, context={'request': request})
 
         if serializer.is_valid():
-            serializer.update(CashIncomes, serializer.data)
+            serializer.update(cash_income, serializer.data)
             return Response({'detail': 'cash income updated'})
         return Response(serializer.errors)
 
-    def delete(self, request):
+    def delete(self, request, id=None):
         user = request.user
         cash_income = get_object_or_404(CashIncomes, user=user, id=id)
         cash_income.delete()
@@ -262,16 +271,20 @@ class CashIncomesAPIView(GenericAPIView):
 
 
 class BanksAPIView(GenericAPIView):
+
+    """ Обработчик для работы с уелями накоплений
+    """
+
     permission_classes = [IsAuthenticated]
     serializer_class = BankSerializer
 
-    def get(self, request):
+    def get(self, request, id=None):
         user = request.user
         if id:
             bank = get_object_or_404(Banks, user=user, id=id)
             return Response(
                 {
-                    'cash_income': {
+                    'bank': {
                         'id': bank.id,
                         'name': bank.name,
                         'required_amount': bank.required_amount,
@@ -306,17 +319,17 @@ class BanksAPIView(GenericAPIView):
 
         return Response(serializer.errors)
 
-    def put(self, request):
+    def put(self, request, id=None):
         user = request.user
         bank = get_object_or_404(Banks, user=user, id=id)
         serializer = self.serializer_class(data=request.data, context={'request': request})
 
         if serializer.is_valid():
-            serializer.update(Banks, serializer.data)
+            serializer.update(bank, serializer.data)
             return Response({'detail': 'bank updated'})
         return Response(serializer.errors)
 
-    def delete(self, request):
+    def delete(self, request, id=None):
         user = request.user
         bank = get_object_or_404(Banks, user=user, id=id)
         bank.delete()
