@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  finance_manager_db:
+    container_name: finance_manager_db
+    image: postgres:15.2-alpine
+      
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRESS_DB: "${POSTGRESS_DB}"
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data/
+    ports:
+        - "5432:5432"
