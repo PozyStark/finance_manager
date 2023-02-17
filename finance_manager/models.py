@@ -4,7 +4,7 @@ from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.hashers import make_password
 from django.db import models
 from django.contrib.auth.models import User, PermissionsMixin
-
+from django.utils import timezone
 
 class UserManager(BaseUserManager):
     """Менеджер для создания кастомного пользователя
@@ -69,7 +69,7 @@ class Expenses(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255, null=False, blank=False)
     amount = models.FloatField(default=0, null=False, blank=False)
-    date = models.DateField(null=False, blank=False, default=datetime.date.today())
+    date = models.DateField(null=False, blank=False, default=timezone.now)
 
     def __str__(self):
         return f'{self.user.email} [{self.name}] [{self.amount}]'
@@ -101,7 +101,7 @@ class CashIncomes(models.Model):
     name = models.CharField(max_length=255, null=False, blank=False)
     amount = models.FloatField(default=0, null=False, blank=False)
     regular = models.BooleanField(default=False, null=False, blank=False)
-    date = models.DateField(null=False, blank=False, default=datetime.date.today())
+    date = models.DateField(null=False, blank=False, default=timezone.now)
 
     def __str__(self):
         return f'{self.user.email} [{self.name}] [{self.amount}]'
