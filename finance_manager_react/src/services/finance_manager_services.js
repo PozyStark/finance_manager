@@ -1,0 +1,3 @@
+const regular_expenses = () => {
+    
+}
